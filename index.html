@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neosite - Votre site web simple, efficace et sur mesure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header avec effet glassmorphism */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Hero avec parallax */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1)"/><stop offset="100%" style="stop-color:rgba(255,255,255,0)"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>') no-repeat center;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: slideInFromBottom 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Sections communes */
+        .section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Section À propos */
+        .about {
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path d="M0,100 C150,200 350,0 500,100 C650,200 850,0 1000,100 L1000,200 L0,200 Z" fill="rgba(102,126,234,0.05)"/></svg>') repeat-x;
+            opacity: 0.3;
+        }
+
+        .about-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Section Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Section Packs */
+        .packs {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+        }
+
+        .packs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .packs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pack-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pack-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pack-card:hover::before {
+            opacity: 1;
+        }
+
+        .pack-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pack-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .pack-name {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .pack-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pack-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .pack-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        /* Section Exemples */
+        .examples {
+            background: #f8f9fa;
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mockup-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mockup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .mockup-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .mockup-content {
+            padding: 1.5rem;
+        }
+
+        .mockup-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .mockup-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Section FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(45deg, #5a6fd8, #6b42a0);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+        }
+
+        .faq-answer-content {
+            padding: 1.5rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Section Contact */
+        .contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations d'intersection */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 3rem 3%;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        /* Particle animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 50%;
+            animation: float-particle 8s linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Neosite</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#a-propos">À propos</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#packs">Packs</a></li>
+                <li><a href="#exemples">Exemples</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>Votre site web simple, efficace et sur mesure</h1>
+            <p>Boostez votre visibilité locale et attirez plus de clients, sans prise de tête !</p>
+            <a href="projet.html" class="votre-classe-css">Démarrer mon projet</a>
+        </div>
+    </section>
+
+    <!-- Section À propos -->
+    <section class="about section animate-on-scroll" id="a-propos">
+        <h2>À propos de Neosite</h2>
+        <div class="about-content">
+            <p>Chez Neosite, nous sommes spécialisés dans la création de sites internet pour les petits commerces de proximité. Nous comprenons vos besoins : rapidité, simplicité et efficacité. Notre mission ? Vous aider à développer votre activité grâce à une présence en ligne professionnelle et accessible.</p>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section class="services section animate-on-scroll" id="services">
+        <h2>Nos Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Création de site vitrine personnalisé</h3>
+                <p>Un site moderne et clair qui présente votre boutique, horaires, produits et services.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📍</div>
+                <h3>Optimisation Google Maps et référencement local</h3>
+                <p>Pour que vos clients vous trouvent facilement dans votre secteur.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Gestion et maintenance simplifiée</h3>
+                <p>On s'occupe des mises à jour et de la sécurité, vous êtes tranquille.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎓</div>
+                <h3>Formation express</h3>
+                <p>Pour gérer facilement vos contenus au quotidien.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Gestion des réseaux sociaux</h3>
+                <p>Facebook, Instagram : on anime vos pages pour vous !</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Exemples -->
+    <section class="examples section animate-on-scroll" id="exemples">
+        <h2>Exemples de Réalisations</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Découvrez nos maquettes types, adaptées à différents commerces</p>
+        <div class="mockup-grid">
+            <div class="mockup-card">
+                <div class="mockup-image">🥖 Boulangerie</div>
+                <div class="mockup-content">
+                    <h3 class="mockup-title">Site Boulangerie</h3>
+                    <p class="mockup-description">Vitrine moderne avec horaires, produits frais et spécialités locales</p>
+                </div>
+            </div>
+            <div class="mockup-card">
+                <div class="mockup-image">✂️ Coiffeur</div>
+                <div class="mockup-content">
+                    <h3 class="mockup-title">Site Coiffeur</h3>
+                    <p class="mockup-description">Présentation des services, galerie photos et prise de rendez-vous</p>
+                </div>
+            </div>
+            <div class="mockup-card">
+                <div class="mockup-image">🍽️ Restaurant</div>
+                <div class="mockup-content">
+                    <h3 class="mockup-title">Site Restaurant</h3>
+                    <p class="mockup-description">Menu interactif, réservations et présentation de l'ambiance</p>
+                </div>
+            </div>
+            <div class="mockup-card">
+                <div class="mockup-image">🏪 Commerce</div>
+                <div class="mockup-content">
+                    <h3 class="mockup-title">Site Commerce</h3>
+                    <p class="mockup-description">Catalogue produits, horaires et informations pratiques</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<style>
+.packs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 20px 0;
+}
+
+.pack-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    border-top: 4px solid #667eea;
+}
+
+.pack-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.pack-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.pack-price {
+    font-size: 2.5em;
+    font-weight: 800;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.votre-classe-css {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+}
+
+.votre-classe-css:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102,126,234,0.4);
+}
+
+.pack-card:nth-child(2) {
+    border-top-color: #2196F3;
+    transform: scale(1.02);
+}
+
+.pack-card:nth-child(2) .pack-price { color: #2196F3; }
+
+.pack-card:nth-child(3) {
+    border-top-color: #9C27B0;
+}
+
+.pack-card:nth-child(3) .pack-price { color: #9C27B0; }
+
+.pack-features {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.feature {
+    color: #666;
+    margin: 8px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* CSS POUR LES MODALS - À AJOUTER À VOTRE CSS EXISTANT */
+
+.pack-features {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.feature {
+    color: #666;
+    margin: 8px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Confirmation modal styles */
+.confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-confirm {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-cancel {
+    background: #f44336;
+    color: white;
+}
+</style>
+
+<div class="packs-grid">
+    <!-- Pack 1 - Pack Essentiel -->
+    <div class="pack-card">
+        <h3 class="pack-title">Pack Essentiel</h3>
+        <div class="pack-price">199€</div>
+        <div class="pack-features">
+            <div class="feature">✓ Site vitrine simple et moderne (jusqu'à 5 pages)</div>
+            <div class="feature">✓ Référencement Google Maps optimisé</div>
+            <div class="feature">✓ Mise en ligne sous 48h</div>
+            <div class="feature">✓ Formation express pour gérer vos contenus</div>
+            <div class="feature">✓ Paiement uniquement après validation finale</div>
+        </div>
+        <button onclick="confirmerPack('Pack Essentiel', '199€')" class="votre-classe-css">
+            Choisir ce pack
+        </button>
+    </div>
+
+    <!-- Pack 2 - Pack Confort -->
+    <div class="pack-card">
+        <h3 class="pack-title">Pack Confort</h3>
+        <div class="pack-price">299€</div>
+        <div class="pack-features">
+            <div class="feature">✓ Tout ce qu'il y a dans le Pack Essentiel</div>
+            <div class="feature">✓ Gestion et mise à jour mensuelle</div>
+            <div class="feature">✓ Optimisation SEO locale avancée</div>
+            <div class="feature">✓ Système de réservation en ligne</div>
+            <div class="feature">✓ Paiement uniquement après validation finale</div>
+        </div>
+        <button onclick="confirmerPack('Pack Confort', '299€')" class="votre-classe-css">
+            Choisir ce pack
+        </button>
+    </div>
+
+    <!-- Pack 3 - Pack Premium -->
+    <div class="pack-card">
+        <h3 class="pack-title">Pack Premium</h3>
+        <div class="pack-price">449€</div>
+        <div class="pack-features">
+            <div class="feature">✓ Tout du Pack Confort</div>
+            <div class="feature">✓ Gestion complète des réseaux sociaux</div>
+            <div class="feature">✓ Assistance prioritaire et mises à jour illimitées</div>
+            <div class="feature">✓ E-commerce intégré (boutique en ligne)</div>
+            <div class="feature">✓ Paiement uniquement après validation finale</div>
+        </div>
+        <button onclick="confirmerPack('Pack Premium', '449€')" class="votre-classe-css">
+            Choisir ce pack
+        </button>
+    </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmerPack(packName, price) {
+            // Créer le modal de confirmation
+            const modal = document.createElement('div');
+            modal.className = 'confirmation-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Confirmer votre choix</h3>
+                    <p>Vous avez sélectionné le <strong>${packName}</strong> au prix de <strong>${price}</strong>.</p>
+                    <p>Souhaitez-vous confirmer cette sélection ?</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn btn-confirm" onclick="validerCommande('${packName}', '${price}')">
+                            Confirmer
+                        </button>
+                        <button class="modal-btn btn-cancel" onclick="fermerModal()">
+                            Annuler
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function validerCommande(packName, price) {
+            // Fermer le modal
+            fermerModal();
+            
+            // Message de remerciement personnalisé
+            setTimeout(() => {
+                const messageModal = document.createElement('div');
+                messageModal.className = 'confirmation-modal';
+                
+                let messagePersonnalise = '';
+                let fonctionnalites = '';
+                
+                if (packName === 'Pack Essentiel') {
+                    messagePersonnalise = 'Parfait pour débuter ! Votre site vitrine sera en ligne sous 48h.';
+                    fonctionnalites = '🚀 Prochaines étapes : Formation express incluse + Optimisation Google Maps';
+                } else if (packName === 'Pack Confort') {
+                    messagePersonnalise = 'Excellent choix ! Vous bénéficiez de notre suivi mensuel.';
+                    fonctionnalites = '🎯 Prochaines étapes : SEO avancé + Système de réservation + Suivi mensuel';
+                } else {
+                    messagePersonnalise = 'Le pack le plus complet ! Assistance prioritaire garantie.';
+                    fonctionnalites = '⭐ Prochaines étapes : E-commerce + Réseaux sociaux + Support illimité';
+                }
+                
+                messageModal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>🎉 Merci pour votre confiance !</h3>
+                        <p><strong>${messagePersonnalise}</strong></p>
+                        <p>${fonctionnalites}</p>
+                        <p>Notre équipe va vous contacter sous 24h pour lancer votre projet.</p>
+                        <div class="modal-buttons">
+                            <button class="modal-btn btn-confirm" onclick="fermerModal()">
+                                Parfait !
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(messageModal);
+            }, 300);
+        }
+
+        function fermerModal() {
+            const modals = document.querySelectorAll('.confirmation-modal');
+            modals.forEach(modal => modal.remove());
+        }
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('confirmation-modal')) {
+                fermerModal();
+            }
+        });
+    </script>
+    <!-- Section FAQ -->
+    <section class="section animate-on-scroll" id="faq">
+        <h2>FAQ — Vos questions, nos réponses</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>⏳ Combien de temps faut-il pour avoir mon site ?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Chez Neosite, nous savons que le temps, c'est de l'argent. C'est pourquoi nous vous garantissons un site clé en main en <strong>moins de 48 heures</strong>. Rapidité et efficacité sont nos maîtres mots !
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>💰 Quand dois-je payer ?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Chez Neosite, la confiance est primordiale. Vous ne payez <strong>qu'après avoir validé et confirmé</strong> que le site correspond parfaitement à vos attentes. Pas d'avance, pas de surprises !
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>💰 Quel est le coût de la maintenance du site ?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Pour assurer que votre site reste toujours à jour, sécurisé et performant, nous proposons un service de maintenance simple et accessible, à un <strong>petit tarif mensuel</strong>. Pas de surprises, juste une tranquillité d'esprit totale.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>📱 Est-ce que vous pouvez gérer mes réseaux sociaux ?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Oui, absolument ! Neosite propose aussi la gestion de vos pages Facebook et Instagram, pour que votre présence en ligne soit complète et dynamique, sans que vous ayez à lever le petit doigt.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>⚙️ Vais-je pouvoir modifier mon site moi-même ?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Bien sûr ! Nous utilisons des outils simples et intuitifs. Vous recevrez une courte formation pour gérer les mises à jour basiques (horaires, photos, promotions), tout en restant libre de faire appel à nous pour les modifications plus complexes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="contact section animate-on-scroll" id="contact">
+        <h2>Contactez-nous</h2>
+        <p>Vous souhaitez en savoir plus ou obtenir un devis personnalisé ? Contactez Neosite dès aujourd'hui !</p>
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div>
+                    <strong>Téléphone</strong><br>
+                    07 61 33 85 32
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>
+                    <strong>Email</strong><br>
+                    elismebdwin@gmail.com
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Neosite - Votre partenaire digital de confiance</p>
+    </footer>
+
+    <!-- Formulaire de projet (modal) -->
+    <div class="project-modal" id="projectModal">
+        <div class="modal-overlay" onclick="closeProjectForm()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🚀 Démarrons votre projet ensemble !</h2>
+                <button class="close-btn" onclick="closeProjectForm()">×</button>
+            </div>
+            
+            <form class="project-form" id="projectForm">
+                <div class="form-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">Étape <span id="currentStep">1</span> sur <span id="totalSteps">4</span></div>
+                </div>
+
+                <!-- Étape 1: Informations générales -->
+                <div class="form-step active" data-step="1">
+                    <h3>📝 Parlez-nous de votre entreprise</h3>
+                    <div class="form-group">
+                        <label>Nom de votre entreprise *</label>
+                        <input type="text" name="company_name" required placeholder="Ex: Boulangerie Martin">
+                    </div>
+                    <div class="form-group">
+                        <label>Type d'activité *</label>
+                        <select name="business_type" required>
+                            <option value="">Choisissez votre secteur</option>
+                            <option value="restaurant">🍽️ Restaurant / Bar</option>
+                            <option value="boulangerie">🥖 Boulangerie / Pâtisserie</option>
+                            <option value="coiffeur">✂️ Coiffeur / Esthétique</option>
+                            <option value="commerce">🏪 Commerce de détail</option>
+                            <option value="services">🔧 Services / Artisan</option>
+                            <option value="sante">🏥 Santé / Bien-être</option>
+                            <option value="autre">🎯 Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Votre nom *</label>
+                        <input type="text" name="contact_name" required placeholder="Prénom Nom">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" name="phone" required placeholder="06 12 34 56 78">
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" name="email" required placeholder="votre@email.com">
+                    </div>
+                </div>
+
+                <!-- Étape 2: Besoins spécifiques -->
+                <div class="form-step" data-step="2">
+                    <h3>🎯 Vos besoins spécifiques</h3>
+                    <div class="form-group">
+                        <label>Quel pack vous intéresse ? *</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="pack" value="essentiel" required>
+                                <div class="radio-content">
+                                    <strong>Pack Essentiel - 199€</strong>
+                                    <p>Site vitrine + Google Maps + Formation</p>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="pack" value="confort" required>
+                                <div class="radio-content">
+                                    <strong>Pack Confort - 299€</strong>
+                                    <p>Pack Essentiel + Maintenance + SEO</p>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="pack" value="premium" required>
+                                <div class="radio-content">
+                                    <strong>Pack Premium - 449€</strong>
+                                    <p>Pack Confort + Réseaux sociaux</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Avez-vous déjà un site web ?</label>
+                        <div class="radio-group-inline">
+                            <label><input type="radio" name="existing_site" value="oui"> Oui</label>
+                            <label><input type="radio" name="existing_site" value="non"> Non</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Objectif principal de votre site *</label>
+                        <select name="main_goal" required>
+                            <option value="">Choisissez votre objectif</option>
+                            <option value="visibilite">🌟 Améliorer ma visibilité locale</option>
+                            <option value="clients">👥 Attirer de nouveaux clients</option>
+                            <option value="info">📋 Présenter mes services/produits</option>
+                            <option value="contact">📞 Faciliter la prise de contact</option>
+                            <option value="vente">💰 Vendre en ligne</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Étape 3: Contenu et design -->
+                <div class="form-step" data-step="3">
+                    <h3>🎨 Design et contenu</h3>
+                    <div class="form-group">
+                        <label>Couleurs préférées pour votre site</label>
+                        <div class="color-palette">
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="bleu">
+                                <div class="color-preview" style="background: #4A90E2;"></div>
+                                <span>Bleu</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="vert">
+                                <div class="color-preview" style="background: #7ED321;"></div>
+                                <span>Vert</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="rouge">
+                                <div class="color-preview" style="background: #D0021B;"></div>
+                                <span>Rouge</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="orange">
+                                <div class="color-preview" style="background: #F5A623;"></div>
+                                <span>Orange</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="violet">
+                                <div class="color-preview" style="background: #7B68EE;"></div>
+                                <span>Violet</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="checkbox" name="colors" value="noir">
+                                <div class="color-preview" style="background: #333;"></div>
+                                <span>Noir</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Style souhaité *</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="style" value="moderne" required>
+                                <div class="radio-content">
+                                    <strong>✨ Moderne & Épuré</strong>
+                                    <p>Design contemporain, lignes nettes</p>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="style" value="classique" required>
+                                <div class="radio-content">
+                                    <strong>🎩 Classique & Élégant</strong>
+                                    <p>Style traditionnel, professionnel</p>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="style" value="chaleureux" required>
+                                <div class="radio-content">
+                                    <strong>🏠 Chaleureux & Convivial</strong>
+                                    <p>Ambiance accueillante, familiale</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Avez-vous des photos/logo à utiliser ?</label>
+                        <div class="radio-group-inline">
+                            <label><input type="radio" name="has_photos" value="oui"> Oui, j'ai du contenu</label>
+                            <label><input type="radio" name="has_photos" value="non"> Non, j'ai besoin d'aide</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 4: Informations complémentaires -->
+                <div class="form-step" data-step="4">
+                    <h3>💬 Derniers détails</h3>
+                    <div class="form-group">
+                        <label>Pages importantes à inclure (cochez toutes les cases utiles)</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="pages" value="accueil"> 🏠 Accueil</label>
+                            <label><input type="checkbox" name="pages" value="services"> 🛍️ Services/Produits</label>
+                            <label><input type="checkbox" name="pages" value="horaires"> 🕐 Horaires</label>
+                            <label><input type="checkbox" name="pages" value="contact"> 📞 Contact</label>
+                            <label><input type="checkbox" name="pages" value="galerie"> 📸 Galerie photos</label>
+                            <label><input type="checkbox" name="pages" value="equipe"> 👥 Notre équipe</label>
+                            <label><input type="checkbox" name="pages" value="avis"> ⭐ Avis clients</label>
+                            <label><input type="checkbox" name="pages" value="blog"> 📝 Blog/Actualités</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Délai souhaité *</label>
+                        <select name="deadline" required>
+                            <option value="">Choisissez votre délai</option>
+                            <option value="urgent">🚀 Urgent (24-48h)</option>
+                            <option value="semaine">📅 Cette semaine</option>
+                            <option value="mois">🗓️ Ce mois-ci</option>
+                            <option value="flexible">😌 Flexible</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Informations complémentaires</label>
+                        <textarea name="additional_info" rows="4" placeholder="Décrivez tout ce qui vous semble important : concurrents à regarder, fonctionnalités spéciales, contraintes particulières..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Comment avez-vous connu Neosite ?</label>
+                        <select name="how_found">
+                            <option value="">Optionnel</option>
+                            <option value="google">🔍 Google</option>
+                            <option value="recommandation">👥 Recommandation</option>
+                            <option value="facebook">📘 Facebook</option>
+                            <option value="instagram">📸 Instagram</option>
+                            <option value="autre">🎯 Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn prev-btn" onclick="previousStep()" style="display: none;">← Précédent</button>
+                    <button type="button" class="nav-btn next-btn" onclick="nextStep()">Suivant →</button>
+                    <button type="submit" class="nav-btn submit-btn" style="display: none;">🚀 Envoyer ma demande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Styles pour le formulaire -->
+    <style>
+        .project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .form-progress {
+            padding: 1.5rem;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            width: 25%;
+        }
+
+        .progress-text {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .project-form {
+            padding: 2rem;
+        }
+
+        .form-step {
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-step h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .radio-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-card:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .radio-card input[type="radio"] {
+            width: auto;
+            margin-right: 1rem;
+        }
+
+        .radio-card input[type="radio"]:checked + .radio-content {
+            color: #667eea;
+        }
+
+        .radio-card:has(input[type="radio"]:checked) {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group-inline {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .radio-group-inline label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .color-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option input[type="checkbox"] {
+            display: none;
+        }
+
+        .color-option input[type="checkbox"]:checked + .color-preview {
+            border-color: #333;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-group label:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .prev-btn {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .prev-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .next-btn, .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .next-btn:hover, .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animated');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Initial check
+
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const faqAnswer = faqItem.querySelector('.faq-answer');
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                faqItem.classList.add('active');
+                faqAnswer.classList.add('active');
+            }
+        }
+
+        // Particle system
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 8 + 4) + 's';
+            document.getElementById('particles').appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 12000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Service cards hover effect
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Pack cards interactive effect
+        document.querySelectorAll('.pack-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+                this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+            });
+        });
+
+        // Mockup cards stagger animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.mockup-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Dynamic typing effect for hero title
+        const heroTitle = document.querySelector('.hero h1');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < originalText.length) {
+                heroTitle.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        
+        setTimeout(typeWriter, 1000);
+
+        // Floating animation for service icons
+        document.querySelectorAll('.service-icon').forEach((icon, index) => {
+            icon.style.animation = `float 3s ease-in-out infinite ${index * 0.5}s`;
+        });
+
+        // Add CSS for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Interactive background for hero section
+        const hero = document.querySelector('.hero');
+        hero.addEventListener('mousemove', function(e) {
+            const rect = hero.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const xPercent = x / rect.width;
+            const yPercent = y / rect.height;
+            
+            const moveX = (xPercent - 0.5) * 20;
+            const moveY = (yPercent - 0.5) * 20;
+            
+            hero.style.backgroundPosition = `${50 + moveX}% ${50 + moveY}%`;
+        });
+
+        // Scroll progress indicator
+        const createScrollIndicator = () => {
+            const indicator = document.createElement('div');
+            indicator.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 4px;
+                background: linear-gradient(45deg, #667eea, #764ba2);
+                z-index: 9999;
+                transition: width 0.1s ease;
+            `;
+            document.body.appendChild(indicator);
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                indicator.style.width = scrollPercent + '%';
+            });
+        };
+        
+        createScrollIndicator();
+
+        // Mobile menu toggle (if needed)
+        const createMobileMenu = () => {
+            const nav = document.querySelector('.nav');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (window.innerWidth <= 768) {
+                const menuToggle = document.createElement('div');
+                menuToggle.innerHTML = '☰';
+                menuToggle.style.cssText = `
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    display: block;
+                    color: #333;
+                `;
+                
+                menuToggle.addEventListener('click', () => {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '100%';
+                    navLinks.style.left = '0';
+                    navLinks.style.width = '100%';
+                    navLinks.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navLinks.style.padding = '1rem';
+                    navLinks.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+                });
+                
+                nav.appendChild(menuToggle);
+            }
+        };
+        
+        window.addEventListener('resize', createMobileMenu);
+        createMobileMenu();
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.overflow = 'hidden';
+            const loader = document.createElement('div');
+            loader.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                transition: opacity 0.5s ease;
+            `;
+            
+            const loaderContent = document.createElement('div');
+            loaderContent.innerHTML = `
+                <div style="color: white; font-size: 2rem; font-weight: bold; animation: pulse 2s infinite;">
+                    Neosite
+                </div>
+            `;
+            
+            loader.appendChild(loaderContent);
+            document.body.appendChild(loader);
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                document.body.style.overflow = 'auto';
+                setTimeout(() => {
+                    loader.remove();
+                }, 500);
+            }, 2000);
+        });
+
+        // Add pulse animation for loader
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.7; }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+
+        // Contact form interaction (if you want to add a form later)
+        const enhanceContactSection = () => {
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.transition = 'transform 0.2s ease';
+                    
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+        };
+        
+        enhanceContactSection();
+
+        // Easter egg - Konami code
+        let konamiCode = [];
+        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > 10) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                document.body.style.animation = 'rainbow 2s infinite';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 10000);
+            }
+        });
+
+        // Rainbow animation for easter egg
+        const rainbowStyle = document.createElement('style');
+        rainbowStyle.textContent = `
+            @keyframes rainbow {
+                0% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(rainbowStyle);
+
+        console.log('🚀 Neosite website loaded successfully!');
+        console.log('💡 Try the Konami code: ↑↑↓↓←→←→BA');
+    </script>
+    <script>
+function confirmerPack(nomPack, prix) {
+    // Étape 1 : Demander confirmation
+    const confirmation = confirm(`Êtes-vous sûr de vouloir choisir le ${nomPack} à ${prix} ?\n\nCela vous redirigera vers le formulaire de projet.`);
+    
+    if (confirmation) {
+        // Étape 2 : Envoyer notification au créateur (vous)
+        envoyerNotificationCreateur(nomPack, prix);
+        
+        // Étape 3 : Afficher message de confirmation à l'utilisateur
+        alert(`Parfait ! Vous avez choisi le ${nomPack}.\n\nVous allez être redirigé vers le formulaire pour finaliser votre projet.`);
+        
+        // Étape 4 : Rediriger vers la page de projet avec le pack sélectionné
+        window.location.href = `projet.html?pack=${encodeURIComponent(nomPack)}&prix=${encodeURIComponent(prix)}`;
+    }
+}
+
+function envoyerNotificationCreateur(pack, prix) {
+    // Cette fonction envoie une notification au créateur
+    // Vous pouvez utiliser EmailJS, Formspree, ou un webhook
+    
+    // Exemple avec EmailJS (à configurer)
+    /*
+    emailjs.send('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', {
+        message: `Un client a sélectionné le ${pack} à ${prix}`,
+        pack_choisi: pack,
+        prix: prix,
+        date: new Date().toLocaleString()
+    });
+    */
+    
+    // Pour l'instant, on l'affiche dans la console
+    console.log(`NOTIFICATION CRÉATEUR: Pack sélectionné: ${pack} - Prix: ${prix}`);
+}
+</script>
+</body>
+</html>

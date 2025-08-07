@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Demande de Design - Créer votre projet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .style-option {
+            position: relative;
+        }
+
+        .style-option input[type="checkbox"] {
+            display: none;
+        }
+
+        .style-option label {
+            display: block;
+            padding: 15px;
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .style-option input[type="checkbox"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .color-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .color-input input[type="color"] {
+            width: 60px;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .color-input input[type="text"] {
+            flex: 1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .style-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Demande de Design</h1>
+            <p>Créons ensemble votre projet parfait</p>
+        </div>
+
+        <div class="form-container">
+            <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+            
+            <!-- Affichage du pack sélectionné -->
+            <div id="packSelectionne" style="display: none; background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #28a745;">
+                <h3 style="color: #28a745; margin: 0 0 10px 0;">✅ Pack sélectionné</h3>
+                <p id="packInfo" style="margin: 0; font-weight: 600;"></p>
+            </div>
+            
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectName">Nom du projet <span class="required">*</span></label>
+                    <input type="text" id="projectName" name="projectName" required placeholder="Ex: Site web pour mon restaurant">
+                </div>
+
+                <div class="form-group">
+                    <label for="clientName">Votre nom/entreprise <span class="required">*</span></label>
+                    <input type="text" id="clientName" name="clientName" required placeholder="Votre nom ou nom de votre entreprise">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="projectType">Type de projet <span class="required">*</span></label>
+                    <select id="projectType" name="projectType" required>
+                        <option value="">Sélectionnez un type</option>
+                        <option value="site-web">Site web</option>
+                        <option value="logo">Logo</option>
+                        <option value="identite-visuelle">Identité visuelle</option>
+                        <option value="support-print">Support print</option>
+                        <option value="application-mobile">Application mobile</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description détaillée de votre projet <span class="required">*</span></label>
+                    <textarea id="description" name="description" required placeholder="Décrivez votre projet en détail : objectifs, public cible, fonctionnalités souhaitées, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Style souhaité</label>
+                    <div class="style-options">
+                        <div class="style-option">
+                            <input type="checkbox" id="moderne" name="style" value="moderne">
+                            <label for="moderne">Moderne</label>
+                        </div>
+                        <div class="style-option">
+                            <input type="checkbox" id="minimaliste" name="style" value="minimaliste">
+                            <label for="minimaliste">Minimaliste</label>
+                        </div>
+                        <div class="style-option">
+                            <input type="checkbox" id="vintage" name="style" value="vintage">
+                            <label for="vintage">Vintage</label>
+                        </div>
+                        <div class="style-option">
+                            <input type="checkbox" id="colore" name="style" value="colore">
+                            <label for="colore">Coloré</label>
+                        </div>
+                        <div class="style-option">
+                            <input type="checkbox" id="elegant" name="style" value="elegant">
+                            <label for="elegant">Élégant</label>
+                        </div>
+                        <div class="style-option">
+                            <input type="checkbox" id="ludique" name="style" value="ludique">
+                            <label for="ludique">Ludique</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="colors">Couleurs préférées</label>
+                    <div class="color-input">
+                        <input type="color" id="colorPicker" value="#667eea">
+                        <input type="text" id="colors" name="colors" placeholder="Ex: Bleu, blanc, rouge ou codes couleur #667eea">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">Budget approximatif <span class="required">*</span></label>
+                    <select id="budget" name="budget" required>
+                        <option value="">Sélectionnez un budget</option>
+                        <option value="500-1000">500€ - 1000€</option>
+                        <option value="1000-2500">1000€ - 2500€</option>
+                        <option value="2500-5000">2500€ - 5000€</option>
+                        <option value="5000+">5000€+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="deadline">Délai souhaité</label>
+                    <input type="text" id="deadline" name="deadline" placeholder="Ex: 2 semaines, 1 mois, flexible">
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalInfo">Informations supplémentaires</label>
+                    <textarea id="additionalInfo" name="additionalInfo" placeholder="Toute information supplémentaire qui pourrait nous aider à mieux comprendre votre projet"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Continuer →</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Récupération du pack sélectionné depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const packChoisi = urlParams.get('pack');
+        const prixPack = urlParams.get('prix');
+        
+        // Affichage du pack sélectionné
+        if (packChoisi && prixPack) {
+            document.getElementById('packSelectionne').style.display = 'block';
+            document.getElementById('packInfo').textContent = `${packChoisi} - ${prixPack}`;
+        }
+
+        // Synchronisation du color picker avec le champ texte
+        document.getElementById('colorPicker').addEventListener('change', function() {
+            document.getElementById('colors').value = this.value;
+        });
+
+        // Gestion du formulaire
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupération des styles sélectionnés
+            const selectedStyles = [];
+            document.querySelectorAll('input[name="style"]:checked').forEach(function(checkbox) {
+                selectedStyles.push(checkbox.value);
+            });
+            
+            // Préparation des données pour l'email
+            const formData = {
+                pack_choisi: packChoisi || 'Aucun pack sélectionné',
+                prix_pack: prixPack || 'Non spécifié',
+                project_name: document.getElementById('projectName').value,
+                client_name: document.getElementById('clientName').value,
+                email: document.getElementById('email').value,
+                project_type: document.getElementById('projectType').value,
+                description: document.getElementById('description').value,
+                styles: selectedStyles.join(', '),
+                colors: document.getElementById('colors').value,
+                budget: document.getElementById('budget').value,
+                deadline: document.getElementById('deadline').value,
+                additional_info: document.getElementById('additionalInfo').value
+            };
+            
+            // Changement du bouton pendant l'envoi
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // Simulation d'envoi (remplacez par votre vraie méthode)
+            setTimeout(() => {
+                alert(`Merci ! Votre demande pour le ${packChoisi || 'projet'} a été envoyée avec succès.\n\nNous vous contacterons sous 24h pour discuter de votre projet.`);
+                
+                // Optionnel : rediriger vers une page de confirmation
+                // window.location.href = 'confirmation.html';
+                
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+            
+            // Affichage dans la console pour debug
+            console.log('Formulaire soumis avec les données:', formData);
+        });
+    </script>
+</body>
+</html>
